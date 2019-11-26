@@ -6,11 +6,6 @@ with open("data.json", encoding='utf-8') as f:
 #Chuẩn hóa về 0-1
 phone1 = []
 
-
-# for key in data:
-# 	name.append(key)
-# 	phone.append(int(data[key]))
-
 #Sort
 def insertionSort(b): 
     for i in range(1, len(b)): 
@@ -64,13 +59,35 @@ def addContacts():
 
 	with open("data.json", 'w', encoding='utf-8') as f:
 		json.dump(data, f)
+	sortContacts()
 	showContacts()
 
 def editContacts():
-	print("Nhập tên muốn sửa : ")
-	name = input()
-
-	if name in data:
+	print("Nhập tên hoặc số điện thoại muốn sửa : ")
+	nameOrPhone = input()
+	
+	# if it is number
+	if nameOrPhone[0].isdigit():
+		found = 0
+		for name, phone in data.items():
+			if nameOrPhone == phone:
+				print("Tìm thấy!")
+				print(name + " : " + phone)
+				found = 1
+		if found == 0:
+			print("Không tìm thấy người này!")
+	# if it is name
+	else:
+		found = 0
+		for name, phone in data.items():
+			if nameOrPhone == name:
+				print("Tìm thấy!")
+				print(name + " : " + phone)
+				found = 1
+		if found == 0:
+			print("Không tìm thấy người này!")
+	# Edit
+	if found == 1:
 		print("Nhập tên mới : ")
 		newName = input()
 		print("Nhập số điện thoại mới : ")
@@ -79,26 +96,51 @@ def editContacts():
 		data[newName] = newPhoneNumber
 		with open("data.json", 'w', encoding='utf-8') as f:
 			json.dump(data, f)
-	else:
-		print("Không tìm thấy người này !")
+	sortContacts()
 	showContacts()
 
 def deleteContacts():
-	print("Nhập tên muốn xóa : ")
-	name = input()
-	if name in data:
-		data.pop(name)
+	print("Nhập tên hoặc số điện thoại muốn xóa : ")
+	nameOrPhone = input()
+	
+	# if it is number
+	if nameOrPhone[0].isdigit():
+		found = 0
+		for name, phone in data.items():
+			if nameOrPhone == phone:
+				print("Tìm thấy!")
+				print(name + " : " + phone)
+				found = 1
+				nameFound = name
+		if found == 0:
+			print("Không tìm thấy người này!")
+	#if it is name
+	else:
+		found = 0
+		for name, phone in data.items():
+			if nameOrPhone == name:
+				print("Tìm thấy!")
+				print(name + " : " + phone)
+				found += 1
+		if found == 0:
+			print("Không tìm thấy người này!")
+
+	# Delete
+	if found == 1:
+		if nameOrPhone[0].isdigit():
+			data.pop(nameFound)
+		else:
+			data.pop(nameOrPhone)
 		with open("data.json", 'w', encoding='utf-8') as f:
 			json.dump(data, f)
-	else:
-		print("Không tìm thấy người này !")
 	showContacts()
 
 def sortContacts():
+	with open("data.json", encoding='utf-8') as f:
+		data = json.load(f)
 	for i,j in data.items():
 		phone1.append(int(j)/1000000000)
-	# for i in phone:
-		# print(i)
+
 	bucketSort(phone1)
 
 	dataSorted = {}
@@ -112,12 +154,24 @@ def sortContacts():
 	print("Đã sắp xếp theo số điện thoại !")
 	showContacts()
 
-def searchContact():
+def searchContactByPhone():
 	print("Nhập số điện thoại muốn tìm kiếm : ")
 	phoneSearch = input()
 	found = 0
 	for name, phone in data.items():
 		if phoneSearch == phone:
+			print("Tìm thấy!")
+			print(name + " : " + phone)
+			found = 1
+	if found == 0:
+		print("Không tìm thấy người này!")
+
+def searchContactByName():
+	print("Nhập tên cần tìm kiếm : ")
+	nameSearch = input()
+	found = 0
+	for name, phone in data.items():
+		if nameSearch == name:
 			print("Tìm thấy!")
 			print(name + " : " + phone)
 			found = 1
@@ -131,7 +185,8 @@ def menu():
 	print("4. Xóa số điện thoại")
 	print("5. Sắp xếp số điện thoại")
 	print("6. Tìm theo số điện thoại")
-	print("7. Thoát")
+	print("7. Tìm kiếm theo tên")
+	print("8. Thoát")
 	s = input()
 
 	if(s == '1'):
@@ -150,7 +205,10 @@ def menu():
 		sortContacts()
 		menu()
 	elif(s == '6'):
-		searchContact()
+		searchContactByPhone()
+		menu()
+	elif(s == '7'):
+		searchContactByName()
 		menu()
 	else:
 		exit()
