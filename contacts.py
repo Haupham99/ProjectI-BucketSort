@@ -53,9 +53,11 @@ def showContacts():
 	print("Danh bạ của bạn:")
 	with open("data.json", encoding='utf-8') as f:
 		data = json.load(f)
-	print("Dạnh bạ : ")
+	print("----------Danh bạ---------")
+	print("    {:<15} {}\n".format("Tên","Số điện thoại"))
 	for x in data :
-		print(x + ":" + data[x])
+		print("| {:<15} |   {}   |".format(x,data[x]))
+		print("------------------------------------")
 	i=input()
 	
 
@@ -216,6 +218,7 @@ def menu():
 		menu()
 	elif(s == '2'):
 		addContacts()
+
 		menu()
 	elif(s == '3'):
 		editContacts()
