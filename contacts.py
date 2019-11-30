@@ -183,26 +183,30 @@ def sortContacts():
 
 def searchContact():
 	print("Nhập tên hoặc số điện thoại muốn tìm kiếm : ")
-	phoneSearch = input()
-	found = 0
-	for name, phone in data.items():
-		if phoneSearch == phone:
-			print("Tìm thấy!")
-			print(name + " : " + phone)
-			found = 1
-	if found == 0:
-		print("Không tìm thấy người này!")
-	nameSearch = input()
-	found = 0
-	for name, phone in data.items():
-		if nameSearch == name:
-			print("Tìm thấy!")
-			print(name + " : " + phone)
-			found = 1
-	if found == 0:
-		print("Không tìm thấy người này!")
+	nameOrPhone = input()
+# if it is number
+	if nameOrPhone[0].isdigit():
+		found = 0
+		for name, phone in data.items():
+			if nameOrPhone == phone:
+				print("Tìm thấy!")
+				print(name + " : " + phone)
+				found = 1
+		if found == 0:
+			print("Không tìm thấy người này!")
+	# if it is name
+	else:
+		found = 0
+		for name, phone in data.items():
+			if nameOrPhone == name:
+				print("Tìm thấy!")
+				print(name + " : " + phone)
+				found = 1
+		if found == 0:
+			print("Không tìm thấy người này!")
 
 def menu():
+	s = input()
 	print("\n************************\n\tMenu\n")
 	print("1. Hiển thị các liên lạc hiện tại")
 	print("2. Thêm liên lạc")
@@ -218,7 +222,6 @@ def menu():
 		menu()
 	elif(s == '2'):
 		addContacts()
-
 		menu()
 	elif(s == '3'):
 		editContacts()
@@ -231,6 +234,7 @@ def menu():
 		menu()
 	elif(s == '6'):
 		searchContact()
+		menu()
 	elif(s == '7'):
 		exit()
 	else:
