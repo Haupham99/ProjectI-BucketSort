@@ -155,6 +155,7 @@ def searchContact():
 	print("Nhập tên hoặc số điện thoại muốn tìm kiếm : ")
 	nameOrPhone = input()
 	name = isContacts(nameOrPhone)
+	i= input()
 
 def menu():
 	print("\n************************\n\tMenu\n")
