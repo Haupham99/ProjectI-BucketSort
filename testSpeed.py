@@ -288,7 +288,7 @@ def sinhSo(n):
     # print(str(t))
     f.write(str(t))
     for i in range(n):
-        t = randrange(n)
+        t = randrange(1000000000)
         # print(str(t))
         f.write("\n"+str(t))
     f.close()
@@ -297,14 +297,17 @@ def sinhSo(n):
 
 def menu(n):
     input()
+    print("\n")
     print("***********************")
     print("1. Sinh so")
     print("2. timeSort: ")
     print("Bam Q de thoat!")
+    print("\n")
     s = input()
     if(s=="1"):
         sinhSo(n)
     if(s=="2"):
+        print("\n")
         print("timeHeapSort = ", timeHeapSort(n))
         print("timeMergeSort = ", timeMergeSort(n))
         print("timeQuickSort = ", timeQuickSort(n))
