@@ -83,28 +83,10 @@ def editContacts():
 	print("Chức năng: Sửa liên lạc\n")
 	print("Nhập tên hoặc số điện thoại muốn sửa : ")
 	nameOrPhone = input()
-# if it is number
-	if nameOrPhone[0].isdigit():
-		found = 0
-		for name, phone in data.items():
-			if nameOrPhone == phone:
-				print("Tìm thấy!")
-				print(name + " : " + phone)
-				found = 1
-		if found == 0:
-			print("Không tìm thấy người này!")
-	# if it is name
-	else:
-		found = 0
-		for name, phone in data.items():
-			if nameOrPhone == name:
-				print("Tìm thấy!")
-				print(name + " : " + phone)
-				found = 1
-		if found == 0:
-			print("Không tìm thấy người này!")
+	name = isContacts(nameOrPhone)
+
 	# Edit
-	if found == 1:
+	if name != "###":
 		print("Nhập tên mới : ")
 		newName = input()
 		print("Nhập số điện thoại mới : ")
@@ -115,62 +97,33 @@ def editContacts():
 		data[newName] = newPhoneNumber
 		with open("data.json", 'w', encoding='utf-8') as f:
 			json.dump(data, f)
-		
 		print("Sửa "+newName+" : "+newPhoneNumber+" OK!")
-	else:
-		print("Không tìm thấy người này !")
 	i=input()
 
 def deleteContacts():
 	print("Chức năng: Xóa liên lạc:\n")
 	print("Nhập tên hoặc số điện thoại muốn xóa : ")
 	nameOrPhone = input()
-	# if it is number
-	if nameOrPhone[0].isdigit():
-		found = 0
-		for name, phone in data.items():
-			if nameOrPhone == phone:
-				print("Tìm thấy!")
-				print(name + " : " + phone)
-				found = 1
-				nameFound = name
-		if found == 0:
-			print("Không tìm thấy người này!")
-	#if it is name
-	else:
-		found = 0
-		for name, phone in data.items():
-			if nameOrPhone == name:
-				print("Tìm thấy!")
-				print(name + " : " + phone)
-				found += 1
-		if found == 0:
-			print("Không tìm thấy người này!")
-
+	name = isContacts(nameOrPhone)
 	# Delete
-	if found == 1:
+	if name!="###":
 		phoneNumber = data[name]
 		data.pop(name)
 		with open("data.json", 'w', encoding='utf-8') as f:
 			json.dump(data, f)
-		
 		print("Xoa "+name+" : "+phoneNumber+" OK!")
-	else:
-		print("Không tìm thấy người này !")
 	i=input()
 
-def sortContacts():
+def sortContactsByNumPhone():
 	with open("data.json", encoding='utf-8') as f:
 		data = json.load(f)
-	print("Chức năng: Sắp xếp:")
+	print("Chức năng: Sắp xếp theo số điện thoại:")
 	for i,j in data.items():
 		phone1.append(int(j)/1000000000)
 	# for i in phone:
 		# print(i)
 	bucketSort(phone1)
-
 	dataSorted = {}
-
 	for x in phone1:
 		for name, phonex in data.items():
 			if int(phonex) == x*1000000000:
@@ -181,40 +134,38 @@ def sortContacts():
 	showContacts()
 	i=input()
 
+
+
+# def sortContactsByName():
+
+
+def isContacts(nameOrPhone):
+	found = 0
+	for name, phone in data.items():
+		if nameOrPhone == phone or nameOrPhone == name:
+			print("Tìm thấy!")
+			print(name + " : " + phone)
+			found = 1
+			return name
+	if found == 0:
+		print("Không tìm thấy người này!")
+		return "###"
+
 def searchContact():
 	print("Nhập tên hoặc số điện thoại muốn tìm kiếm : ")
 	nameOrPhone = input()
-# if it is number
-	if nameOrPhone[0].isdigit():
-		found = 0
-		for name, phone in data.items():
-			if nameOrPhone == phone:
-				print("Tìm thấy!")
-				print(name + " : " + phone)
-				found = 1
-		if found == 0:
-			print("Không tìm thấy người này!")
-	# if it is name
-	else:
-		found = 0
-		for name, phone in data.items():
-			if nameOrPhone == name:
-				print("Tìm thấy!")
-				print(name + " : " + phone)
-				found = 1
-		if found == 0:
-			print("Không tìm thấy người này!")
+	name = isContacts(nameOrPhone)
 
 def menu():
-	s = input()
 	print("\n************************\n\tMenu\n")
 	print("1. Hiển thị các liên lạc hiện tại")
 	print("2. Thêm liên lạc")
 	print("3. Sửa số liên lạc")
 	print("4. Xóa số liên lạc")
 	print("5. Sắp xếp theo số điện thoại")
-	print("6. Tìm danh bạ")
-	print("7. Thoát")
+	print("6. Sắp xếp theo tên liên lạc ")
+	print("7. Tìm danh bạ")
+	print("8. Thoát")
 	s = input()
 
 	if(s == '1'):
@@ -230,12 +181,12 @@ def menu():
 		deleteContacts()
 		menu()
 	elif(s == '5'):
-		sortContacts()
-		menu()
-	elif(s == '6'):
-		searchContact()
+		sortContactsByNumPhone()
 		menu()
 	elif(s == '7'):
+		searchContact()
+		menu()
+	elif(s == '8'):
 		exit()
 	else:
 		menu()
