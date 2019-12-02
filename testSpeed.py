@@ -249,7 +249,7 @@ def bucketSort(arr):
     for i in range(slot_num): 
         arr2.append([]) 
           
-    # 10 buckets 
+    # 1000 buckets 
     for j in arr: 
         index_b = int(slot_num * j)  
         arr2[index_b].append(j) 

@@ -22,8 +22,7 @@ def bucketSort(x):
 
     for i in range(slot_num): 
         arr.append([]) 
-          
-    # 10 buckets 
+    # 1000 buckets 
     for j in x: 
         index_b = int(slot_num * j)  
         arr[index_b].append(j) 
@@ -40,6 +39,29 @@ def bucketSort(x):
             k += 1
     return x 
 
+def bucketSortByName(x):
+	arr = []
+	slot_num = 100
+	for i in range(slot_num):
+		arr.append([])
+
+	#10 buckets
+	for j in x:
+		nameLower = str.lower(j)
+		index_b = int(slot_num * (ord(nameLower[0])-97)/(123-97))
+		arr[index_b].append(j)
+
+	# Sort buckets  
+	for i in range(slot_num): 
+	    arr[i] = insertionSort(arr[i]) 
+	      
+	# concatenate bucket 
+	k = 0
+	for i in range(slot_num): 
+	    for j in range(len(arr[i])): 
+	        x[k] = arr[i][j] 
+	        k += 1
+	return x 
 
 #checkPhoneNumber:
 def phoneError(phone):
@@ -137,7 +159,25 @@ def sortContactsByNumPhone():
 
 
 
-# def sortContactsByName():
+def sortContactsByName():
+	with open("data.json", encoding='utf-8') as f:
+		data = json.load(f)
+	listName = []
+	print("Chức năng: Sắp xếp theo tên:")
+	for i, j in data.items():
+		listName.append(i)
+
+	bucketSortByName(listName)
+	dataSorted = {}
+	for x in listName:
+		for name, phone in data.items():
+			if str.lower(x) == str.lower(name):
+				dataSorted[name] = phone
+	with open("data.json",'w', encoding='utf-8') as f:
+		json.dump(dataSorted, f)
+	print("Đã sắp xếp theo số điện thoại !")
+	showContacts()
+	i=input()
 
 
 def isContacts(nameOrPhone):
@@ -184,6 +224,9 @@ def menu():
 		menu()
 	elif(s == '5'):
 		sortContactsByNumPhone()
+		menu()
+	elif(s == '6'):
+		sortContactsByName()
 		menu()
 	elif(s == '7'):
 		searchContact()
