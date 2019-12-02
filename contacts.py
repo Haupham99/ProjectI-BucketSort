@@ -18,7 +18,7 @@ def insertionSort(b):
               
 def bucketSort(x): 
     arr = [] 
-    slot_num = 10 
+    slot_num = 1000
 
     for i in range(slot_num): 
         arr.append([]) 
@@ -117,17 +117,18 @@ def deleteContacts():
 def sortContactsByNumPhone():
 	with open("data.json", encoding='utf-8') as f:
 		data = json.load(f)
+	listPhone = []
 	print("Chức năng: Sắp xếp theo số điện thoại:")
 	for i,j in data.items():
-		phone1.append(int(j)/1000000000)
+		listPhone.append(int(j)/1000000000)
 	# for i in phone:
 		# print(i)
-	bucketSort(phone1)
+	bucketSort(listPhone)
 	dataSorted = {}
-	for x in phone1:
-		for name, phonex in data.items():
-			if int(phonex) == x*1000000000:
-				dataSorted[name] = phonex
+	for x in listPhone:
+		for name, phone in data.items():
+			if int(phone) == x*1000000000:
+				dataSorted[name] = phone
 	with open("data.json",'w', encoding='utf-8') as f:
 		json.dump(dataSorted, f)
 	print("Đã sắp xếp theo số điện thoại !")

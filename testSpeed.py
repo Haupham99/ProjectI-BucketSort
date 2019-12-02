@@ -4,7 +4,7 @@ from time import process_time
 # To heapify subtree rooted at index i.
 #  n is size of heap
 
-
+# -----------Heap Sort -----------
 def heapify(arr, n, i):
     largest = i
     l = 2 * i + 1
@@ -40,6 +40,21 @@ def heapSort(arr):
     for i in range(n-1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]  # swap
         heapify(arr, i, 0)
+    # return arr 
+
+def timeHeapSort(n):
+    try:
+        f = open("testSpeed.txt", "r")
+        arr = []
+        for i in range(n):
+            arr.append(int(f.readline()))
+            # print(arr[i])
+    finally:
+        f.close()
+    timeStart = process_time()
+    heapSort(arr)
+    timeFinish = process_time()
+    return (timeFinish - timeStart)
 
 
 #----------------------------------------------------____#
@@ -76,11 +91,26 @@ def quickSort(arr, low, high):
         # partition and after partition
         quickSort(arr, low, pi-1)
         quickSort(arr, pi+1, high)
+    # return arr 
+
+def timeQuickSort(n):
+    try:
+        f = open("testSpeed.txt", "r")
+        arr = []
+        for i in range(n):
+            arr.append(int(f.readline()))
+            # print(arr[i])
+    finally:
+        f.close()
+    timeStart = process_time()
+    quickSort(arr, 0, n-1)
+    timeFinish = process_time()
+    return (timeFinish - timeStart)
+
+
 
 #----------------------------------------------------____#
 # Merge sort
-
-
 # Merges two subarrays of arr[].
 # First subarray is arr[l..m]
 # Second subarray is arr[m+1..r]
@@ -144,34 +174,64 @@ def mergeSort(arr, l, r):
         mergeSort(arr, l, m)
         mergeSort(arr, m+1, r)
         merge(arr, l, m, r)
+    # return arr 
 
-# Couting Sort
-def countingSort(arr, n, exp):
-    output = [0] * n
-    count = [0] * 10
-
-    # Store count of occurrences in count[]
-    for i in range(n):
-        t = (int(arr[i])/int(exp))%10
-        count[int(t)] += 1
-
-    # hange count[i] so that count[i] now contains actual
-    #  position of this digit in output[]
-    for i in range(10):
-        count[i] += count[i - 1]
-
-    # Build the output array
-    for i in range(n-1,0):
-        output[count[ (arr[i]/exp)%10 ] - 1] = arr[i]
-        count[ (arr[i]/exp)%10 ] -= 1
-
-    # Copy the output array to arr[], so that arr[] now
-    #  contains sorted numbers according to current digit
-    for i in range(n):
-        arr[i] = output[i]
+def timeMergeSort(n):
+    try:
+        f = open("testSpeed.txt", "r")
+        arr = []
+        for i in range(n):
+            arr.append(int(f.readline()))
+            # print(arr[i])
+    finally:
+        f.close()
+    timeStart = process_time()
+    mergeSort(arr, 0, n-1)
+    timeFinish = process_time()
+    return (timeFinish - timeStart)
 
 
-# Bucket sort
+
+# -------------Couting Sort--------------
+# Python program for counting sort 
+
+# The main function that sort the given string arr[] in 
+# alphabetical order 
+def countSort(array1):
+             
+    arrMax = array1[0]
+    for a in array1:
+        arrMax = a if a>arrMax else arrMax
+    m = arrMax + 1   
+    count = [0] * m 
+    for a in array1:
+    # count occurences
+        count[a] += 1                
+    i = 0
+    for a in range(m):            
+        for c in range(count[a]):  
+            array1[i] = a
+            i += 1
+    # return array1
+
+
+def timeCoutingSort(n):
+    try:
+        f = open("testSpeed.txt", "r")
+        arr = []
+        for i in range(n):
+            arr.append(int(f.readline()))
+            # print(arr[i])
+    finally:
+        f.close()
+    timeStart = process_time()
+    countSort(arr)
+    timeFinish = process_time()
+    return (timeFinish - timeStart)
+
+
+
+#   --------------------Bucket Sort----------
 def insertionSort(b): 
     for i in range(1, len(b)): 
         up = b[i] 
@@ -182,100 +242,41 @@ def insertionSort(b):
         b[j + 1] = up      
     return b      
               
-def bucketSort(x): 
-    arr = [] 
-    slot_num = 10 
+def bucketSort(arr): 
+    arr2 = [] 
+    slot_num = 10000
 
     for i in range(slot_num): 
-        arr.append([]) 
+        arr2.append([]) 
           
     # 10 buckets 
-    for j in range(x): 
+    for j in arr: 
         index_b = int(slot_num * j)  
-        arr[index_b].append(j) 
+        arr2[index_b].append(j) 
       
     # Sort buckets  
     for i in range(slot_num): 
-        arr[i] = insertionSort(arr[i]) 
+        arr2[i] = insertionSort(arr2[i]) 
           
     # concatenate bucket 
     k = 0
     for i in range(slot_num): 
-        for j in range(len(arr[i])): 
-            x[k] = arr[i][j] 
+        for j in range(len(arr2[i])): 
+            arr[k] = arr2[i][j] 
             k += 1
-    return x 
+    # return arr
 
 def timeBucketSort(n):
     try:
         f = open("testSpeed.txt", "r")
         arr = []
         for i in range(n):
-            arr.append(f.readline())
+            arr.append(float((f.readline()))/MAX)
             # print(arr[i])
     finally:
         f.close()
     timeStart = process_time()
     bucketSort(arr)
-    timeFinish = process_time()
-    return (timeFinish - timeStart)
-
-def timeQuickSort(n):
-    try:
-        f = open("testSpeed.txt", "r")
-        arr = []
-        for i in range(n):
-            arr.append(f.readline())
-            # print(arr[i])
-    finally:
-        f.close()
-    timeStart = process_time()
-    quickSort(arr, 0, n-1)
-    timeFinish = process_time()
-    return (timeFinish - timeStart)
-
-
-def timeMergeSort(n):
-    try:
-        f = open("testSpeed.txt", "r")
-        arr = []
-        for i in range(n):
-            arr.append(f.readline())
-            # print(arr[i])
-    finally:
-        f.close()
-    timeStart = process_time()
-    mergeSort(arr, 0, n-1)
-    timeFinish = process_time()
-    return (timeFinish - timeStart)
-
-
-def timeHeapSort(n):
-    try:
-        f = open("testSpeed.txt", "r")
-        arr = []
-        for i in range(n):
-            arr.append(f.readline())
-            # print(arr[i])
-    finally:
-        f.close()
-    timeStart = process_time()
-    heapSort(arr)
-    timeFinish = process_time()
-    return (timeFinish - timeStart)
-
-
-def timeCoutingSort(n):
-    try:
-        f = open("testSpeed.txt", "r")
-        arr = []
-        for i in range(n):
-            arr.append(f.readline())
-            # print(arr[i])
-    finally:
-        f.close()
-    timeStart = process_time()
-    countingSort(arr, n, 10)
     timeFinish = process_time()
     return (timeFinish - timeStart)
 
@@ -288,7 +289,7 @@ def sinhSo(n):
     # print(str(t))
     f.write(str(t))
     for i in range(n):
-        t = randrange(1000000000)
+        t = randrange(MAX)
         # print(str(t))
         f.write("\n"+str(t))
     f.close()
@@ -302,7 +303,7 @@ def menu(n):
     print("1. Sinh so")
     print("2. timeSort: ")
     print("Bam Q de thoat!")
-    print("\n")
+    print("--->> your chose is: ")
     s = input()
     if(s=="1"):
         sinhSo(n)
@@ -312,13 +313,14 @@ def menu(n):
         print("timeMergeSort = ", timeMergeSort(n))
         print("timeQuickSort = ", timeQuickSort(n))
         print("timeCoutingSort = ", timeCoutingSort(n))
-        print("timeBucketSort = ", bucketSort(n))
+        print("timeBucketSort = ", timeBucketSort(n))
+        print("OK!!!")
     if(s.upper() == "Q"):
         exit()
     else:
         menu(n)
 
-
+MAX = 10000000
 if __name__ == '__main__':
     n = 100000
     print("\nBấm [enter] để bắt đầu")
