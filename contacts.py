@@ -166,7 +166,6 @@ def sortContactsByName():
 	print("Chức năng: Sắp xếp theo tên:")
 	for i, j in data.items():
 		listName.append(i)
-
 	bucketSortByName(listName)
 	dataSorted = {}
 	for x in listName:
@@ -175,7 +174,7 @@ def sortContactsByName():
 				dataSorted[name] = phone
 	with open("data.json",'w', encoding='utf-8') as f:
 		json.dump(dataSorted, f)
-	print("Đã sắp xếp theo số điện thoại !")
+	print("Đã sắp xếp theo tên !")
 	showContacts()
 	i=input()
 

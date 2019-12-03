@@ -280,6 +280,49 @@ def timeBucketSort(n):
     timeFinish = process_time()
     return (timeFinish - timeStart)
 
+def radixSort(arr, n):
+    max1 = max(arr) 
+    # Do counting sort for every digit. Note that instead 
+    # of passing digit number, exp is passed. exp is 10^i 
+    # where i is current digit number 
+    exp1 = 1
+    while max1/exp1 > 0: 
+        # The output array elements that will have sorted arr 
+        output = [0] * (n) 
+        # initialize count array as 0 
+        count = [0] * (10) 
+        # Store count of occurrences in count[] 
+        for i in range(0, n): 
+            index = (arr[i]/exp1) 
+            count[ int((index)%10) ] += 1
+        # Change count[i] so that count[i] now contains actual 
+        #  position of this digit in output array 
+        for i in range(1,10): 
+            count[i] += count[i-1] 
+        i = n-1
+        while i>=0: 
+            index = (arr[i]/exp1) 
+            output[ count[ int((index)%10) ] - 1] = arr[i] 
+            count[ int(index)%10 ] -= 1
+            i -= 1
+        i = 0
+        for i in range(0,len(arr)): 
+            arr[i] = output[i] 
+        exp1 *= 10
+
+def timeRadixSort(n):
+    try:
+        f = open("testSpeed.txt", "r")
+        arr = []
+        for i in range(n):
+            arr.append(float((f.readline())))
+            # print(arr[i])
+    finally:
+        f.close()
+    timeStart = process_time()
+    radixSort(arr,n)
+    timeFinish = process_time()
+    return (timeFinish - timeStart)
 
 def sinhSo(n):
     print("Dang tao so...")
@@ -313,6 +356,7 @@ def menu(n):
         print("timeMergeSort = ", timeMergeSort(n))
         print("timeQuickSort = ", timeQuickSort(n))
         print("timeCoutingSort = ", timeCoutingSort(n))
+        # print("timeRadixSort = ", timeRadixSort(n))
         print("timeBucketSort = ", timeBucketSort(n))
         print("OK!!!")
     if(s.upper() == "Q"):
