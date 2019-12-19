@@ -36,7 +36,7 @@ def bucketSort(x, slot_num):
     return x 
 def timeBucketSort(size,j):
     try:
-        with open("sdt-Hai-Ba-Trung"+str(j)+".json", encoding='utf-8') as f:
+        with open("SDT"+str(j)+".json", encoding='utf-8') as f:
 		    data = json.load(f)
         arr = []
         for i,j in data.items():

@@ -1,7 +1,7 @@
 import codecs
 import json
 
-f = codecs.open('Thanh-Pho-Bien-Hoa.txt', encoding='utf-8')
+f = codecs.open('SDT1.txt', encoding='utf-8')
 
 #Dữ liệu cuối cùng
 dataDict = {}
@@ -16,29 +16,26 @@ data = f.read()
 f.close()
 
 arr = data.split(',')
-# print(arr[0])
+print(arr[0])
 
 i = 0
 for x in arr:
-	# x = x[1:len(x)-1]
+	x = x[1:len(x)-1]
 	# print(x)
 	nameAndPhone = x.split('-')
 
 	if(len(nameAndPhone) > 2):
 		nameAndPhone[0] = nameAndPhone[len(nameAndPhone)-2]
 		nameAndPhone[1] = nameAndPhone[len(nameAndPhone)-1]
-	if len(nameAndPhone) < 2:
-		continue
-	nameAndPhone[1] = nameAndPhone[1].replace('(','')
-	nameAndPhone[1] = nameAndPhone[1].replace(')','')
-	nameAndPhone[1] = nameAndPhone[1].replace(' ','')
-	nameAndPhone[1] = nameAndPhone[1].replace('.','') 
+	# print(nameAndPhone[0], nameAndPhone[1])
+	nameAndPhone[1] = nameAndPhone[1][7:len(nameAndPhone[1])]
+
+	nameAndPhone[1] = int(nameAndPhone[1].replace('.',''))
 	# if i < 20 :
 		# print(nameAndPhone[0], nameAndPhone[1])
 		# i = i+1
-
 	dataDict[nameAndPhone[0]] = nameAndPhone[1]
 
-print(len(dataDict))
-with open("sdt-Thanh-Pho-Bien-Hoa.json", 'w', encoding='utf-8') as f:
+print(dataDict)
+with open("SDT1.json", 'w', encoding='utf-8') as f:
 	json.dump(dataDict, f)
