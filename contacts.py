@@ -9,13 +9,13 @@ phone1 = []
 def insertionSort(b): 
     for i in range(1, len(b)): 
         up = b[i] 
-        j = i - 1
+        j = i - 1 
         while j >=0 and b[j] > up:  
             b[j + 1] = b[j] 
             j -= 1
         b[j + 1] = up      
     return b      
-              
+
 def bucketSort(x): 
     arr = [] 
     slot_num = 1000
@@ -25,7 +25,7 @@ def bucketSort(x):
     # 1000 buckets 
     for j in x: 
         index_b = int(slot_num * j)  
-        arr[index_b].append(j) 
+        arr[index_b].append(j)
       
     # Sort buckets  
     for i in range(slot_num): 
