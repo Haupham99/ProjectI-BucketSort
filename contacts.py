@@ -142,7 +142,7 @@ def sortContactsByNumPhone():
 	listPhone = []
 	print("Chức năng: Sắp xếp theo số điện thoại:")
 	for i,j in data.items():
-		listPhone.append(int(j)/1000000000)
+		listPhone.append(int(j)/1000000000) #chuẩn hóa về 0..1
 	# for i in phone:
 		# print(i)
 	bucketSort(listPhone)
