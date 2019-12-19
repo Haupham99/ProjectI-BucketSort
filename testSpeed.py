@@ -242,9 +242,9 @@ def insertionSort(b):
         b[j + 1] = up      
     return b      
               
-def bucketSort(arr): 
+def bucketSort(arr, num): 
     arr2 = [] 
-    slot_num = 10000
+    slot_num = num
 
     for i in range(slot_num): 
         arr2.append([]) 
@@ -266,18 +266,27 @@ def bucketSort(arr):
             k += 1
     # return arr
 
-def timeBucketSort(n):
+def timeBucketSort(n, num):
     try:
         f = open("testSpeed.txt", "r")
         arr = []
         for i in range(n):
-            arr.append(float((f.readline()))/MAX)
+            arr.append(float((f.readline()))/MAX) # chuẩn hóa về 0..1
             # print(arr[i])
     finally:
         f.close()
     timeStart = process_time()
-    bucketSort(arr)
+    arr = bucketSort(arr, num)
     timeFinish = process_time()
+    # F = open("ResultTestSpeed.txt", "w+")
+    # print("f.write is: " + f.mode)
+    # t = randrange(n)
+    # print(str(t))
+    # F.write(str(t))
+    # for i in range(n):
+    #     # t = randrange(MAX)
+    #     # print(str(t))
+    #     F.write("\n"+str(t))
     return (timeFinish - timeStart)
 
 def radixSort(arr, n):
@@ -352,19 +361,28 @@ def menu(n):
         sinhSo(n)
     if(s=="2"):
         print("\n")
-        print("timeHeapSort = ", timeHeapSort(n))
-        print("timeMergeSort = ", timeMergeSort(n))
-        print("timeQuickSort = ", timeQuickSort(n))
-        print("timeCoutingSort = ", timeCoutingSort(n))
+        # print("timeHeapSort = ", timeHeapSort(n))
+        # print("timeMergeSort = ", timeMergeSort(n))
+        # print("timeQuickSort = ", timeQuickSort(n))
+        # print("timeCoutingSort = ", timeCoutingSort(n))
         # print("timeRadixSort = ", timeRadixSort(n))
-        print("timeBucketSort = ", timeBucketSort(n))
+        # print("timeBucketSort = ", timeBucketSort(n, 1000000))
+        
+        i=1000
+        f= open("timeSort.txt", "w+")
+        while(i <= 100000):
+           t = timeBucketSort(n, i)
+           print("timeBucketSort[",i,"] = ", t) 
+           i += 1000
+           f.write(str(t)+ '\n')
+
         print("OK!!!")
     if(s.upper() == "Q"):
         exit()
     else:
         menu(n)
 
-MAX = 10000000
+MAX = 1000000
 if __name__ == '__main__':
     n = 100000
     print("\nBấm [enter] để bắt đầu")
