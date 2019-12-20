@@ -68,9 +68,13 @@ def thongKe():
 def thongKeHaNoi():
     print("Starting...")
     F = open("Result-Ha-Noi.txt", "w+")
+
+    for i in range(1000,11000,1000):
+        sumTime = timeBucketSort(i,"ha-noi")
+        print(str(i) + " thung: " + str(sumTime) + "\n")
+        F.write(str(i) + " thung: " + str(sumTime) + "\n")
     for i in range(5000,105000,5000):
-        sumTime = 0 
-        sumTime += timeBucketSort(i,"ha-noi")
+        sumTime = timeBucketSort(i,"ha-noi")
         print(str(i) + " thung: " + str(sumTime) + "\n")
         F.write(str(i) + " thung: " + str(sumTime) + "\n")
     print("Finish.....")
