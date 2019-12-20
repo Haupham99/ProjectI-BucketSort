@@ -18,7 +18,7 @@ def insertionSort(b):
               
 def bucketSort(x): 
     arr = [] 
-    slot_num = 1000
+    slot_num = 350
 
     for i in range(slot_num): 
         arr.append([]) 
@@ -41,7 +41,7 @@ def bucketSort(x):
 
 def bucketSortByName(x):
 	arr = []
-	slot_num = 100
+	slot_num = 10
 	for i in range(slot_num):
 		arr.append([])
 
@@ -154,14 +154,15 @@ def sortContactsByNumPhone():
 	listPhone = []
 	print("Chức năng: Sắp xếp theo số điện thoại:")
 	for i,j in data.items():
-		listPhone.append(int(j)/10000000000) #chuẩn hóa về 0..1
+		j = int(j)-2000000000
+		listPhone.append(j/1000000000) #chuẩn hóa về 0..1
 	# for i in phone:
-		# print(i)
+		# print(i)5
 	bucketSort(listPhone)
 	dataSorted = {}
 	for x in listPhone:
 		for name, phone in data.items():
-			if int(phone) == x*10000000000:
+			if int(phone) == x*1000000000 + 2000000000:
 				dataSorted[name] = phone
 	with open("data.json",'w', encoding='utf-8') as f:
 		json.dump(dataSorted, f)
