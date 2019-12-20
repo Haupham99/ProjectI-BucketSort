@@ -6,39 +6,28 @@ phone = []
 
 data1 = []
 
-path = 'ha-noi/ha-noi'
+path = 'sdt-Hai-Ba-Trung'
 
 #Mở file
 with open(path + '.json', encoding='utf-8') as f:
 	data = json.load(f)
 
-for name, phone1 in data.items():
-	phone.append(phone1)
+for i, j in data.items():
+	phone.append(j)
 
-#Xóa sđt ko có định dạng sđt
-for i,phone1 in enumerate(phone):
-	phone1 = phone1.replace('"','')
-	if phone1[0] != '0':
-		phone.remove(phone1)
-	else :
-		phone[i] = int(phone1)
+for i, x in enumerate(phone):
+	x = int(x) - 2000000000
+	phone[i] = x
 
-#Chuẩn hóa về 9 chữ số
-for i in range(len(phone)):
-	phone[i] = int(phone[i])
-	# if(phone[i] >= 1000000000):
-		# phone.remove(phone[i])	
+numberPhoneRandom = 100000 - len(phone)
 
-#Xuất file
-with open('63tinh/' + 'ha-noi' + '.json','w', encoding='utf-8') as f:
+#Sinh ngau nhien :
+for i in range(numberPhoneRandom):
+	chuSoDau = random.randint(436,439)
+	chuSoCuoi = random.randint(1,999999)
+
+	phoneRandom = chuSoDau*1000000+chuSoCuoi
+	phone.append(phoneRandom)
+
+with open("63tinh/ha-noi.json", 'w', encoding='utf-8') as f:
 	json.dump(phone, f)
-
-def test():
-	with open('ha-noi/ha-noi.json', encoding='utf-8') as f:
-		data = json.load(f)
-
-	print(len(data))
-
-if __name__ == '__main__':
-	test()
-
