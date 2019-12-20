@@ -35,9 +35,9 @@ def bucketSort(x, slot_num):
             x[k] = arr[i][j] 
             k += 1
     return x 
-def timeBucketSort(size,c):
+def timeBucketSort(size,s):
     count = 0
-    with open("63tinh/"+str(c)+".json", encoding='utf-8') as f:
+    with open("63tinh/"+str(s)+".json", encoding='utf-8') as f:
         data = json.load(f)
     arr = []
     for j in data:
@@ -64,8 +64,19 @@ def thongKe():
         F.write(str(i) + " thung: " + str(sumTime) + "\n")
     print("Finish.....")
     F.close()
+
+def thongKeHaNoi():
+    print("Starting...")
+    F = open("Result-Ha-Noi.txt", "w+")
+    for i in range(5000,105000,5000):
+        sumTime = 0 
+        sumTime += timeBucketSort(i,"ha-noi")
+        print(str(i) + " thung: " + str(sumTime) + "\n")
+        F.write(str(i) + " thung: " + str(sumTime) + "\n")
+    print("Finish.....")
+    F.close()
 if __name__ == "__main__":
-    thongKe()
-    # timeBucketSort(10000, 1)
+    # thongKe()
+    thongKeHaNoi()
 
 
