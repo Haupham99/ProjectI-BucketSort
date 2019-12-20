@@ -56,7 +56,7 @@ def timeBucketSort(size,s):
 def thongKe():
     print("Starting...")
     F = open("ResultTestSpeed.txt", "w+")
-    for i in range(5000,100000,5000):
+    for i in range(1000,11000,1000):
         sumTime = 0 
         for j in range(1,100):
             sumTime += timeBucketSort(i,j)
@@ -80,7 +80,7 @@ def thongKeHaNoi():
     print("Finish.....")
     F.close()
 if __name__ == "__main__":
-    # thongKe()
-    thongKeHaNoi()
+    thongKe()
+    # thongKeHaNoi()
 
 
