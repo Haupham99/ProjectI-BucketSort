@@ -1,6 +1,6 @@
 import codecs
 import json
-
+# convert DATA -> NUMBER
 for i in range(1,63):
 	file_name = "SDT"+str(i)
 	f = codecs.open(file_name + '.txt', encoding='utf-8')
