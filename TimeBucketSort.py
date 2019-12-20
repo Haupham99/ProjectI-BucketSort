@@ -18,8 +18,9 @@ def bucketSort(x, slot_num):
 
     for i in range(slot_num): 
         arr.append([]) 
-    # 1000 buckets 
+    # slot_num buckets 
     for j in x: 
+        j = int(j)
         index_b = int(slot_num * j)  
         arr[index_b].append(j)
       
@@ -34,24 +35,36 @@ def bucketSort(x, slot_num):
             x[k] = arr[i][j] 
             k += 1
     return x 
-def timeBucketSort(size,j):
-    try:
-        with open("SDT"+str(j)+".json", encoding='utf-8') as f:
-		    data = json.load(f)
-        arr = []
-        for i,j in data.items():
+def timeBucketSort(size,c):
+    count = 0
+    with open("63tinh/"+str(c)+".json", encoding='utf-8') as f:
+        data = json.load(f)
+    arr = []
+    for j in data:
+        if(j< 1000000000):
+            count+=1
             arr.append(int(j)/1000000000) # chuẩn hóa về 0..1
-    finally:
-        f.close()
+        # t = int(j)/1000000000
+        # if(t >= 1):
+        #     print(t)
+    # print("count:" ,count)
     timeStart = process_time()
     bucketSort(arr, size)
     timeFinish = process_time()
     return (timeFinish - timeStart)
+
 def thongKe():
-    for i in range(100000,1000000,10000):
+    print("Starting...")
+    for i in range(70000,100000,5000):
         sumTime = 0 
-        for j in range(100):
+        for j in range(1,100):
             sumTime += timeBucketSort(i,j)
+        print(str(i) + " thung: " + str(sumTime) + "\n")
         F = open("ResultTestSpeed.txt", "a+")
-        F.write(str(i) + " thung: " + str(sumTime))
+        F.write(str(i) + " thung: " + str(sumTime) + "\n")
+    print("Finish.....")
+if __name__ == "__main__":
+    thongKe()
+    # timeBucketSort(10000, 1)
+
 
