@@ -48,7 +48,17 @@ def bucketSortByName(x):
 	#10 buckets
 	for j in x:
 		nameLower = str.lower(j)
-		index_b = int(slot_num * (ord(nameLower[0])-97)/(123-97))
+		if nameLower[0] == 'đ' :
+			nameLower = nameLower.replace('đ', 'd', 1)
+		elif nameLower[0] == 'â':
+			nameLower = nameLower.replace('â', 'a', 1)
+		elif (nameLower[0] == 'ứ'):
+			nameLower = nameLower.replace('ứ', 'u', 1)
+		elif (nameLower[0] == 'ư'):
+			nameLower = nameLower.replace('ư', 'u', 1)
+
+		index_b = int(slot_num * (ord(nameLower[0])-50)/(123-50))
+		# print(index_b, nameLower[0])
 		arr[index_b].append(j)
 
 	# Sort buckets  
@@ -65,8 +75,8 @@ def bucketSortByName(x):
 
 #checkPhoneNumber:
 def phoneError(phone):
-	if(len(phone) != 10): 
-		print("Nhập đủ 10 số nhé! Nhập lại nào: ")
+	if(len(phone) != 11): 
+		print("Nhập đủ 11 số nhé! Nhập lại nào: ")
 		return True
 	return False
 #Menu
@@ -80,6 +90,8 @@ def showContacts():
 	for x in data :
 		print("| {:<15} |   {}   |".format(x,data[x]))
 		print("------------------------------------")
+
+	print("Tổng số liên lạc hiện tại :" + str(len(data)))
 	i=input()
 	
 
@@ -142,14 +154,14 @@ def sortContactsByNumPhone():
 	listPhone = []
 	print("Chức năng: Sắp xếp theo số điện thoại:")
 	for i,j in data.items():
-		listPhone.append(int(j)/1000000000) #chuẩn hóa về 0..1
+		listPhone.append(int(j)/10000000000) #chuẩn hóa về 0..1
 	# for i in phone:
 		# print(i)
 	bucketSort(listPhone)
 	dataSorted = {}
 	for x in listPhone:
 		for name, phone in data.items():
-			if int(phone) == x*1000000000:
+			if int(phone) == x*10000000000:
 				dataSorted[name] = phone
 	with open("data.json",'w', encoding='utf-8') as f:
 		json.dump(dataSorted, f)
